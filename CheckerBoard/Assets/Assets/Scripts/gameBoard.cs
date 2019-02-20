@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class gameBoard : MonoBehaviour
 {
-    public GameObject redTilePrefab; 
-    public GameObject blackTilePrefab;
+    public GameObject whiteTilePrefab, blackTilePrefab; 
+    public GameObject redPiece, blackPiece;
+    
     //public Material redMat, blackMat;
     
     public GameObject[ , ] squares  = new GameObject [8,8];
@@ -16,12 +17,14 @@ public class gameBoard : MonoBehaviour
             for (int j=0; j<8; j++){
                 //A red tile only occurs when (i, j) blocks are both either even or odd 
                 if (i % 2 != 0 && j % 2 != 0 || i % 2 == 0 && j % 2 == 0) {
-                    squares [i, j] = Instantiate (redTilePrefab, new Vector2 (i, j), Quaternion.identity);
-                    //squares [i, j].GetComponent<Renderer>().material = blackMat;
+                    squares [i, j] = Instantiate (whiteTilePrefab, new Vector2 (i, j), Quaternion.identity);
+                    squares [i, j] = Instantiate (redPiece, new Vector2 (i, j), Quaternion.identity);
                 }
                 //If the coordinates are either both odd or even then a black tile is instantiated
                 else{
                     squares [i, j] = Instantiate (blackTilePrefab, new Vector2 (i, j), Quaternion.identity);
+                    squares [i, j] = Instantiate (blackPiece, new Vector2 (i, j), Quaternion.identity);
+
                 }   
             }
         }
