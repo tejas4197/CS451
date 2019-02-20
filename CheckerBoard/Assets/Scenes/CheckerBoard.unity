@@ -406,7 +406,7 @@ PrefabInstance:
     - target: {fileID: 6102543744293235905, guid: 4be2f60b481e5104ab80702abd811c66,
         type: 3}
       propertyPath: m_Name
-      value: RedTile
+      value: WhiteTile
       objectReference: {fileID: 0}
     - target: {fileID: 3602934123989642802, guid: 4be2f60b481e5104ab80702abd811c66,
         type: 3}
