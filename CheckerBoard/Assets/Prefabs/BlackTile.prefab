@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3602934123989642802}
   - component: {fileID: 8165074773822722480}
+  - component: {fileID: 7446462910965060099}
+  - component: {fileID: 1623982164189868614}
   m_Layer: 0
   m_Name: BlackTile
-  m_TagString: Untagged
+  m_TagString: Square
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,3 +81,30 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7446462910965060099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6102543744293235905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270128cf1200eea4183bd7f4a0a7de2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0000000000000000
+  orgColor: {r: 0.41568628, g: 0.26666668, b: 0.19607843, a: 1}
+--- !u!65 &1623982164189868614
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6102543744293235905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}

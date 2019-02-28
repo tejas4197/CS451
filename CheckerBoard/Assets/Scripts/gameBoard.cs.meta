@@ -1,9 +1,17 @@
 fileFormatVersion: 2
-guid: 0b039c0011366a3458ccbbd97505736d
+guid: 6943c29db2271f7408ffcfd372542261
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - redTilePrefab: {fileID: 6102543744293235905, guid: 4be2f60b481e5104ab80702abd811c66,
+      type: 3}
+  - blackTilePrefab: {fileID: 6102543744293235905, guid: 1ff2515ff4d553544ba8dd6ddb677c0c,
+      type: 3}
+  - redPiece: {fileID: 8070664987140171611, guid: 7c9ed51155d83e3449ebe75793db2655,
+      type: 3}
+  - blackPiece: {fileID: 8070664987140171611, guid: 6c356e22a41cdf243b0e79d5962b1f37,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

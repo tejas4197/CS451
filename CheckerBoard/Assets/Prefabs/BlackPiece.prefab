@@ -10,9 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2735611810624648270}
   - component: {fileID: 5893983938591314103}
+  - component: {fileID: 2939508873356934084}
+  - component: {fileID: 6082647238221939187}
+  - component: {fileID: 5688193064628696988}
   m_Layer: 0
   m_Name: BlackPiece
-  m_TagString: Untagged
+  m_TagString: Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 867d7c0fa0d6f2d4fb85e64665f6e1cb, type: 3}
   m_Color: {r: 0.09433961, g: 0.012014951, b: 0.012014951, a: 1}
   m_FlipX: 0
@@ -79,3 +82,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2939508873356934084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8070664987140171611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ce43c1ed2654d4c98b898c5a5dd58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0000000000000000
+  isBlack: 1
+--- !u!65 &6082647238221939187
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8070664987140171611}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.3}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5688193064628696988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8070664987140171611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0705ccf6b3d4a584a8595161a7bddb40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

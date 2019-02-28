@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Piece
+  - Square
   layers:
   - Default
   - TransparentFX
@@ -13,8 +15,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - PostProcessing
+  - PieceLayer
   - 
   - 
   - 
@@ -40,4 +42,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: PieceLayer
+    uniqueID: 2694940837
+    locked: 0
+  - name: TileLayer
+    uniqueID: 1183526335
     locked: 0
