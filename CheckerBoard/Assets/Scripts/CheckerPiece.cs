@@ -53,9 +53,54 @@ public class CheckerPiece : MonoBehaviour {
         if (isKinged) { return movement.getValidKingMoves(position, board); }
         else { return movement.getValidMoves(position, board); }   
     }
-	
-	//make a piece a king
-	public void promote()
+
+    //used for checking for possible future moves of a piece
+    public bool checkIfPossibleMoves(GameBoard board)
+    {
+        List<GameObject> Lbc = new List<GameObject>(); //moves
+
+        // return array list of possible board cells
+        if (isKinged) { Lbc = movement.getValidKingMoves(position, board); }
+        else { Lbc = movement.getValidMoves(position, board); }
+
+        //Are there possible moves? If not, just return false.
+        if (Lbc.Count > 0)
+        {
+            //Now we also have to check that the spaces we'd move to
+            //wouldnt just be places that the opponent could jump us
+            //so there should also be spaces to move to after our first movement
+            //this occurs when:
+            //1. when your moving one place, and none of the next possible pieces are
+            //   occupied by an opponent, where the place theyd jump to is empty
+            //2. 
+            //basically im trying to check for a check mate
+            foreach (GameObject bc in Lbc)
+            {
+                Debug.Log(bc.GetComponent<BoardCell>().getPosition()[0]+", "+bc.GetComponent<BoardCell>().getPosition()[1]);
+                
+                //if theres even one safe place to go to, return true
+                //wont work because theres no piece in the space
+                if (bc.GetComponent<BoardCell>().checkIfOccupied())
+                {
+
+                }
+                if (movement.getValidMoves(bc.GetComponent<BoardCell>().getPosition(), board).Count > 0)
+                {
+                    return true;
+                }
+            }
+
+            //if no safe moves were found
+            return false;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //make a piece a king
+    public void promote()
 	{
 		isKinged = true;
 		//code to switch regular piece with king piece visually?

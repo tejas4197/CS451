@@ -12,8 +12,16 @@ public class GameManager : MonoBehaviour
 
     #region "Code that Runs Game"
 
-    public bool checkWinState(bool isBlacksTurn)
+    public bool checkWinState(bool isBlacksTurn, GameBoard board)
     {
+        if (board.getWinState(isBlacksTurn, board))
+        {
+            Debug.Log("Black Wins");
+        }
+        else
+        {
+            Debug.Log("Red Wins");
+        }
         //checks if the person who just went has won
         //by cycling through boardCells
         //check if occupied, check if checkerpiece is oppponent
@@ -43,6 +51,7 @@ public class GameManager : MonoBehaviour
         board = gameObject.GetComponent<GameBoard>();
         board.CreateBoard();
         board.placeInitialPieces();
+        isBlacksTurn = true; 
 
         // if winstate returns true (meaning a player won, then break the loop)
         /*
@@ -111,6 +120,14 @@ public class GameManager : MonoBehaviour
                             Destroy(board.getPieceOnBoard(currentPiece[0] + captureX, currentPiece[1] + captureY));
                             board.clearPieceOnBoard(currentPiece[0] + captureX, currentPiece[1] + captureY);
                         }
+
+                        //check if someone has won after every move
+                        //checkWinState(isBlacksTurn, board);
+
+                        //switch turn
+                        //we have to make it so that this wouldnt be effected if yellow square is clicked on by wrong player 
+                        if (isBlacksTurn) { isBlacksTurn = false; }
+                        else { isBlacksTurn = true; }
                     }
                     //remove previous yellow tiles
                     board.setOriginalColors();
@@ -120,7 +137,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
+     
     public void takeTurn(bool isBlacksTurn)
     {
         //if checks whose turn it is

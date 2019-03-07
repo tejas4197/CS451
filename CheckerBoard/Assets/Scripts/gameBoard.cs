@@ -132,5 +132,47 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+    // This function is used to check the win state of a particular team
+    // it returns false immeditely upon discovering that just one piece has possible moves
+    public bool getWinState(bool isBlacksTurn, GameBoard board)
+    {
+        //check pieces on squares on even columns
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (squares[i * 2, j * 2].GetComponent<BoardCell>().checkIfOccupied())
+                {
+                    if (pieces[i * 2, j * 2].GetComponent<CheckerPiece>().isBlack != isBlacksTurn)
+                    {
+                        if (pieces[i * 2, j * 2].GetComponent<CheckerPiece>().checkIfPossibleMoves(board))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        //check pieces on squares on odd columns
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (squares[(i * 2) + 1, (j * 2) + 1].GetComponent<BoardCell>().checkIfOccupied())
+                {
+                    if (pieces[(i * 2) + 1, (j * 2) + 1].GetComponent<CheckerPiece>().isBlack != isBlacksTurn)
+                    {
+                        if (pieces[(i * 2) + 1, (j * 2) + 1].GetComponent<CheckerPiece>().checkIfPossibleMoves(board))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        //return true when no pieces had any possible moves
+        return true;
+    }
     #endregion
 }
