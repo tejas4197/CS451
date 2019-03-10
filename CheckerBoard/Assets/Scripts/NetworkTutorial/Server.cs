@@ -98,8 +98,8 @@ public class Server : MonoBehaviour
         clients.Add(sc);
 
         StartListening();
-
-        Debug.Log("Somebody has connected!");
+        
+        Broadcast("", sc);
     }
 
     //Check if client is still connected to server
@@ -156,10 +156,30 @@ public class Server : MonoBehaviour
         }
     }
 
+    //Server send (Overload)
+    private void Broadcast(string data, ServerClient c)
+    {
+        List<ServerClient> sc = new List<ServerClient> { c };
+        Broadcast(data, sc);
+    }
+
+
     //Server Read
     private void OnIncomingData(ServerClient c, string data)
     {
-        Debug.Log(c.clientName + " : " + data);
+        Debug.Log("Host: " + data);
+        string[] aData = data.Split('|');
+        string clientName = "client";
+
+        switch (aData[0])
+        {
+            case "CWHO":
+                c.clientName = "host";
+                c.isHost = (aData[2] == "0") ? false : true;
+                Broadcast("SCNN|" + c.clientName, clients);
+                break;
+
+        }
     }
 }
 
@@ -168,6 +188,7 @@ public class ServerClient
 {
     public string clientName;
     public TcpClient tcp; //Socket
+    public bool isHost;
 
     public ServerClient(TcpClient tcp)
     {

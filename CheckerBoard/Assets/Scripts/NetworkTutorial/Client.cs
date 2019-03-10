@@ -12,6 +12,9 @@ public class Client : MonoBehaviour
     private NetworkStream stream;
     private StreamWriter writer;
     private StreamReader reader;
+    public bool isHost;
+
+    private GameClient player;
 
     //Prevent component from destroy on load
     private void Start()
@@ -75,7 +78,31 @@ public class Client : MonoBehaviour
     //read messages from the server
     private void OnIncomingData(string data)
     {
-        Debug.Log(data);
+        Debug.Log("Client: " + data);
+        string[] aData = data.Split('|');
+        string clientName = "host";
+
+        switch(aData[0])
+        {
+            case "":
+                UserConnected("client");
+                Send("CWHO|" + clientName + "|" + ((isHost)?1:0).ToString());
+                break;
+            case "SCNN|":
+                UserConnected(aData[1]);
+                break;
+
+
+        }
+    }
+
+    private void UserConnected(string name)
+    {
+        GameClient c = new GameClient();
+        c.name = name;
+        player = c;
+
+        menuManager.Instance.StartGame();
     }
 
     //Handle case of crash while connected

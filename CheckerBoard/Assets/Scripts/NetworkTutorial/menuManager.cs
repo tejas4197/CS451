@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
 
@@ -36,6 +37,7 @@ public class menuManager : MonoBehaviour
             Server s = Instantiate(serverPrefab).GetComponent<Server>();
             s.Init();
             Client c = Instantiate(clientPrefab).GetComponent<Client>();
+            c.isHost = true;
             c.ConnectToServer("127.0.0.1", 7070);
         }
         catch(Exception e){
@@ -73,5 +75,10 @@ public class menuManager : MonoBehaviour
         Client c = FindObjectOfType<Client>();
         if (c != null)
             Destroy(c.gameObject);
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("CheckerBoard");
     }
 }
