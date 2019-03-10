@@ -62,9 +62,9 @@ public class NetworkGameManager : NetworkBehaviour
     //game loop
     public void Update()
     { 
-        if(!isLocalPlayer){
-            return;
-        }       
+        //if(!isLocalPlayer){
+        //    return;
+        //}       
         //if screen is clicked on
         if (Input.GetMouseButtonDown(0))
         {          
