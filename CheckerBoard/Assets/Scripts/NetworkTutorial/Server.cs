@@ -142,11 +142,14 @@ public class Server : MonoBehaviour
         {
             try
             {
+                //Get socket stream
                 StreamWriter writer = new StreamWriter(sc.tcp.GetStream());
+                
+                //Write and flush data from server
                 writer.WriteLine(data);
                 writer.Flush();
             }
-            catch (Exception e)
+            catch (Exception e) //Client unreachable
             {
                 Debug.Log("Write error : " + e.Message);
             }
