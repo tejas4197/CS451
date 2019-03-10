@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public bool isConnected;
     public bool isBlacksTurn;
+    public bool changeTurn;
     public GameBoard board;
     public int[] currentPiece = new int[2];
     //public ServerPlayer player; //wait what is this object?
@@ -42,7 +43,8 @@ public class GameManager : MonoBehaviour
         board = gameObject.GetComponent<GameBoard>();
         board.CreateBoard();
         board.placeInitialPieces();
-        isBlacksTurn = true; 
+        isBlacksTurn = true;
+        changeTurn = true;
 
         // if winstate returns true (meaning a player won, then break the loop)
         /*
@@ -81,7 +83,7 @@ public class GameManager : MonoBehaviour
         //ray shoots out from camera toward click and hits box collider 
         if (Physics.Raycast(ray, out RaycastHit hit, LayerMask.GetMask("PieceLayer")))
         {
-            if (hit.transform.gameObject.tag == pieceName)
+            if ((hit.transform.gameObject.tag == pieceName) && changeTurn)
             {
                 //if new piece is clicked on
                 if (hit.transform.gameObject.GetComponent<CheckerPiece>().getPosition() != currentPiece)
@@ -107,6 +109,9 @@ public class GameManager : MonoBehaviour
                 //if a yellow tile was clicked on
                 if (board.squares[hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0], hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1]].GetComponent<SpriteRenderer>().color == Color.yellow)
                 {
+                    //Firstly, we're able to take turns after each move
+                    changeTurn = true;
+
                     //get piece currently clicked on and set it on the new space
                     board.getPieceOnBoard(currentPiece[0], currentPiece[1]).GetComponent<PieceMovement>().move(board.getPieceOnBoard(currentPiece[0], currentPiece[1]), hit.transform.gameObject.GetComponent<BoardCell>());
                     board.setPieceOnBoard(board.getPieceOnBoard(currentPiece[0], currentPiece[1]), hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0], hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1]);
@@ -122,22 +127,43 @@ public class GameManager : MonoBehaviour
                         if (captureY == -2) { captureY = -1; } else { captureY = 1; }
                         Destroy(board.getPieceOnBoard(currentPiece[0] + captureX, currentPiece[1] + captureY));
                         board.clearPieceOnBoard(currentPiece[0] + captureX, currentPiece[1] + captureY);
-                    }
 
+                        //after jumping set original colors
+                        board.setOriginalColors();
+
+                        //can we jump again?
+                        List<GameObject> jumpAgain = new List<GameObject>();
+                        jumpAgain = hit.transform.gameObject.GetComponent<BoardCell>().getPiece().showValidMoves(board);
+
+                        foreach (GameObject jb in jumpAgain)
+                        {
+                            if (Mathf.Abs(jb.GetComponent<BoardCell>().getPosition()[1] - hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1]) == 2)
+                            {
+                                jb.GetComponent<SpriteRenderer>().color = Color.yellow;
+                                currentPiece[0] = hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0];
+                                currentPiece[1] = hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1];
+                                changeTurn = false;                
+                            }
+                        }
+                    }
+                                        
                     //check if someone has won after every move
                     checkWinState(isBlacksTurn, board);
 
-                    if (isBlacksTurn) { isBlacksTurn = false; }
-                    else { isBlacksTurn = true; }   
+                    if (changeTurn) //if were changing turns
+                    {
+                        if (isBlacksTurn) { isBlacksTurn = false; }
+                        else { isBlacksTurn = true; }
+                    }  
                 }
-                //remove previous yellow tiles
-                board.setOriginalColors();
+                //remove previous yellow tiles (if were changing turns)
+                if (changeTurn) { board.setOriginalColors(); }          
             }
 
             Debug.Log(hit.transform.gameObject.tag);
         }
     }
-     
+  
     public void takeTurn(bool isBlacksTurn)
     {
         //if checks whose turn it is
