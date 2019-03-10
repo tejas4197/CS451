@@ -143,9 +143,9 @@ public class GameBoard : MonoBehaviour
             {
                 if (squares[i * 2, j * 2].GetComponent<BoardCell>().checkIfOccupied())
                 {
-                    if (pieces[i * 2, j * 2].GetComponent<CheckerPiece>().isBlack != isBlacksTurn)
+                    if (pieces[i * 2, j * 2].GetComponent<CheckerPiece>().getColor() != isBlacksTurn)
                     {
-                        if (pieces[i * 2, j * 2].GetComponent<CheckerPiece>().checkIfPossibleMoves(board))
+                        if (pieces[i * 2, j * 2].GetComponent<CheckerPiece>().showValidMoves(board).Count > 0)
                         {
                             return false;
                         }
@@ -160,9 +160,9 @@ public class GameBoard : MonoBehaviour
             {
                 if (squares[(i * 2) + 1, (j * 2) + 1].GetComponent<BoardCell>().checkIfOccupied())
                 {
-                    if (pieces[(i * 2) + 1, (j * 2) + 1].GetComponent<CheckerPiece>().isBlack != isBlacksTurn)
+                    if (pieces[(i * 2) + 1, (j * 2) + 1].GetComponent<CheckerPiece>().getColor() != isBlacksTurn)
                     {
-                        if (pieces[(i * 2) + 1, (j * 2) + 1].GetComponent<CheckerPiece>().checkIfPossibleMoves(board))
+                        if (pieces[(i * 2) + 1, (j * 2) + 1].GetComponent<CheckerPiece>().showValidMoves(board).Count > 0)
                         {
                             return false;
                         }

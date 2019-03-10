@@ -16,25 +16,16 @@ public class GameManager : MonoBehaviour
     {
         if (board.getWinState(isBlacksTurn, board))
         {
-            Debug.Log("Black Wins");
+            if (isBlacksTurn)
+            {
+                Debug.Log("Black Wins");
+            }
+            else
+            {
+                Debug.Log("Red Wins");
+            }           
         }
-        else
-        {
-            Debug.Log("Red Wins");
-        }
-        //checks if the person who just went has won
-        //by cycling through boardCells
-        //check if occupied, check if checkerpiece is oppponent
-        //check if opponents peice has valid moves.
-        //
-        //also use some made logic to check for check mates
-        //basically if they have valid moves
-        //check if one of those moves can result in a non check mate
-        //if one valid non check mate move is found, break loop
-        //
-        //if none of the opponents peices have valid non check mate moves
-        //the player wins, return true
-        //
+        
         return true;
     }
 
@@ -72,8 +63,7 @@ public class GameManager : MonoBehaviour
     {        
         //if screen is clicked on
         if (Input.GetMouseButtonDown(0))
-        {   
-            
+        {             
             if (isBlacksTurn)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -82,9 +72,7 @@ public class GameManager : MonoBehaviour
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 moveAction("Red Piece", ray);
-            }
-
-            
+            }           
         }
     }
 
@@ -137,14 +125,10 @@ public class GameManager : MonoBehaviour
                     }
 
                     //check if someone has won after every move
-                    //checkWinState(isBlacksTurn, board);
-                    if (isBlacksTurn)
-                    {
-                        isBlacksTurn = false;
-                    } else
-                    {
-                        isBlacksTurn = true;
-                    }   
+                    checkWinState(isBlacksTurn, board);
+
+                    if (isBlacksTurn) { isBlacksTurn = false; }
+                    else { isBlacksTurn = true; }   
                 }
                 //remove previous yellow tiles
                 board.setOriginalColors();
