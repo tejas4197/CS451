@@ -13,6 +13,12 @@ public class Client : MonoBehaviour
     private StreamWriter writer;
     private StreamReader reader;
 
+    //Prevent component from destroy on load
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     //Decide when to connect to a certain host
     public bool ConnectToServer(string host, int port)
     {

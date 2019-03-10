@@ -29,6 +29,8 @@ public class menuManager : MonoBehaviour
         try{
             Server s = Instantiate(serverPrefab).GetComponent<Server>();
             s.Init();
+            Client c = Instantiate(clientPrefab).GetComponent<Client>();
+            c.ConnectToServer("127.0.0.1", 7070);
         }
         catch(Exception e){
             Debug.Log(e.Message);
@@ -56,5 +58,12 @@ public class menuManager : MonoBehaviour
         serverMenu.SetActive(false);
         connectMenu.SetActive(false);
 
+        Server s = FindObjectOfType<Server>();
+        if (s != null)
+            Destroy(s.gameObject);
+
+        Client c = FindObjectOfType<Client>();
+        if (c != null)
+            Destroy(c.gameObject);
     }
 }
