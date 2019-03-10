@@ -72,69 +72,85 @@ public class GameManager : MonoBehaviour
     {        
         //if screen is clicked on
         if (Input.GetMouseButtonDown(0))
-        {          
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        {   
             
-            //ray shoots out from camera toward click and hits box collider 
-            if (Physics.Raycast(ray, out RaycastHit hit, LayerMask.GetMask("PieceLayer")))
-            {                
-                if (hit.transform.gameObject.tag == "Piece") 
+            if (isBlacksTurn)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                moveAction("Black Piece", ray);
+            } else
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                moveAction("Red Piece", ray);
+            }
+
+            
+        }
+    }
+
+    public void moveAction(string pieceName, Ray ray)
+    {
+        //ray shoots out from camera toward click and hits box collider 
+        if (Physics.Raycast(ray, out RaycastHit hit, LayerMask.GetMask("PieceLayer")))
+        {
+            if (hit.transform.gameObject.tag == pieceName)
+            {
+                //if new piece is clicked on
+                if (hit.transform.gameObject.GetComponent<CheckerPiece>().getPosition() != currentPiece)
                 {
-                    //if new piece is clicked on
-                    if (hit.transform.gameObject.GetComponent<CheckerPiece>().getPosition() != currentPiece)
-                    {
-                        //record position of piece currently clicked on
-                        currentPiece[0] = hit.transform.gameObject.GetComponent<CheckerPiece>().getPosition()[0];
-                        currentPiece[1] = hit.transform.gameObject.GetComponent<CheckerPiece>().getPosition()[1];
-                        //remove previous yellow tiles
-                        board.setOriginalColors(); 
-                    }
-
-                    List<GameObject> Lbc = new List<GameObject>();
-                    Lbc = hit.transform.gameObject.GetComponent<CheckerPiece>().showValidMoves(board);
-                    
-                    for (int i = 0; i < Lbc.Count; i++)
-                    {                     
-                        Lbc[i].GetComponent<SpriteRenderer>().color = Color.yellow;
-                    }
-                }
-                
-                if (hit.transform.gameObject.tag == "Square")
-                {                   
-                    //if a yellow tile was clicked on
-                    if (board.squares[hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0], hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1]].GetComponent<SpriteRenderer>().color == Color.yellow)
-                    {
-                        //get piece currently clicked on and set it on the new space
-                        board.getPieceOnBoard(currentPiece[0], currentPiece[1]).GetComponent<PieceMovement>().move(board.getPieceOnBoard(currentPiece[0], currentPiece[1]), hit.transform.gameObject.GetComponent<BoardCell>());      
-                        board.setPieceOnBoard(board.getPieceOnBoard(currentPiece[0], currentPiece[1]), hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0], hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1]);
-                        board.clearPieceOnBoard(currentPiece[0], currentPiece[1]); //empty old space
-
-                        //if the difference in y between the old and new space is two spaces, that means a jump was made
-                        if (Mathf.Abs(hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1] - currentPiece[1]) == 2)
-                        {
-                            //get X and Y position of piece jumped over
-                            int captureX = hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0] - currentPiece[0];
-                            int captureY = hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1] - currentPiece[1];
-                            if (captureX == -2) { captureX = -1; } else { captureX = 1; }
-                            if (captureY == -2) { captureY = -1; } else { captureY = 1; }
-                            Destroy(board.getPieceOnBoard(currentPiece[0] + captureX, currentPiece[1] + captureY));
-                            board.clearPieceOnBoard(currentPiece[0] + captureX, currentPiece[1] + captureY);
-                        }
-
-                        //check if someone has won after every move
-                        //checkWinState(isBlacksTurn, board);
-
-                        //switch turn
-                        //we have to make it so that this wouldnt be effected if yellow square is clicked on by wrong player 
-                        if (isBlacksTurn) { isBlacksTurn = false; }
-                        else { isBlacksTurn = true; }
-                    }
+                    //record position of piece currently clicked on
+                    currentPiece[0] = hit.transform.gameObject.GetComponent<CheckerPiece>().getPosition()[0];
+                    currentPiece[1] = hit.transform.gameObject.GetComponent<CheckerPiece>().getPosition()[1];
                     //remove previous yellow tiles
                     board.setOriginalColors();
                 }
 
-                Debug.Log(hit.transform.gameObject.tag);
+                List<GameObject> Lbc = new List<GameObject>();
+                Lbc = hit.transform.gameObject.GetComponent<CheckerPiece>().showValidMoves(board);
+
+                for (int i = 0; i < Lbc.Count; i++)
+                {
+                    Lbc[i].GetComponent<SpriteRenderer>().color = Color.yellow;
+                }
             }
+
+            if (hit.transform.gameObject.tag == "Square")
+            {
+                //if a yellow tile was clicked on
+                if (board.squares[hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0], hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1]].GetComponent<SpriteRenderer>().color == Color.yellow)
+                {
+                    //get piece currently clicked on and set it on the new space
+                    board.getPieceOnBoard(currentPiece[0], currentPiece[1]).GetComponent<PieceMovement>().move(board.getPieceOnBoard(currentPiece[0], currentPiece[1]), hit.transform.gameObject.GetComponent<BoardCell>());
+                    board.setPieceOnBoard(board.getPieceOnBoard(currentPiece[0], currentPiece[1]), hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0], hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1]);
+                    board.clearPieceOnBoard(currentPiece[0], currentPiece[1]); //empty old space
+
+                    //if the difference in y between the old and new space is two spaces, that means a jump was made
+                    if (Mathf.Abs(hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1] - currentPiece[1]) == 2)
+                    {
+                        //get X and Y position of piece jumped over
+                        int captureX = hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0] - currentPiece[0];
+                        int captureY = hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1] - currentPiece[1];
+                        if (captureX == -2) { captureX = -1; } else { captureX = 1; }
+                        if (captureY == -2) { captureY = -1; } else { captureY = 1; }
+                        Destroy(board.getPieceOnBoard(currentPiece[0] + captureX, currentPiece[1] + captureY));
+                        board.clearPieceOnBoard(currentPiece[0] + captureX, currentPiece[1] + captureY);
+                    }
+
+                    //check if someone has won after every move
+                    //checkWinState(isBlacksTurn, board);
+                    if (isBlacksTurn)
+                    {
+                        isBlacksTurn = false;
+                    } else
+                    {
+                        isBlacksTurn = true;
+                    }   
+                }
+                //remove previous yellow tiles
+                board.setOriginalColors();
+            }
+
+            Debug.Log(hit.transform.gameObject.tag);
         }
     }
      
