@@ -92,12 +92,8 @@ public class Client : MonoBehaviour
                 UserConnected(aData[1]);
                 break;
             case "SMOV":
-                GameManager.Instance.gameMove(int.Parse(aData[1]), int.Parse(aData[2]), int.Parse(aData[3]), int.Parse(aData[4]));
-                GameManager.Instance.Turn(int.Parse(aData[5]));
-                break;
-            case "STURN":
-                Debug.Log(aData);
-                GameManager.Instance.Turn(int.Parse(aData[1]));
+                GameManager.Instance.gameMove(int.Parse(aData[1]), int.Parse(aData[2]), int.Parse(aData[3]), int.Parse(aData[4]), aData[5], aData[6]);
+                GameManager.Instance.Turn(aData[5]);
                 break;
         }
     }
