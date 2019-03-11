@@ -47,8 +47,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConnected: 0
   isBlacksTurn: 0
+  playerBlack: 0
+  changeTurn: 0
+  clientThing: 0
   board: {fileID: 0}
   currentPiece: 0000000000000000
+  oldPiece: 0000000000000000
+  player: {fileID: 0}
+  c: {fileID: 8925912790422832166, guid: f3d10287574fb7a44b8fd44b0c3652e2, type: 3}
+  forceCapture: 0
+  forceSquare: 0
+  forcePieces: []
+  globalValid: []
+  mustJump: 0
 --- !u!114 &4325199392183801985
 MonoBehaviour:
   m_ObjectHideFlags: 0

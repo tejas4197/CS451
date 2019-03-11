@@ -131,6 +131,8 @@ public class PieceMovement : MonoBehaviour {
             if (!piece.GetComponent<CheckerPiece>().getIsKing()) //if its not already king
             {
                 piece.GetComponent<CheckerPiece>().promote();
+
+                //Change the piece color to indicate a king
                 if (piece.GetComponent<CheckerPiece>().getColor())
                 {
                     piece.GetComponent<SpriteRenderer>().color = Color.gray;

@@ -57,10 +57,10 @@ public class Client : MonoBehaviour
             if(stream.DataAvailable)
             {
                 string data = reader.ReadLine();
+
                 //If there is data to process
                 if (data != null)
-                    OnIncomingData(data);
-                    
+                    OnIncomingData(data);                    
             }
         }
     }
@@ -136,5 +136,4 @@ public class GameClient
 {
     public string name;
     public bool isHost;
-
 }

@@ -163,7 +163,6 @@ public class Server : MonoBehaviour
         Broadcast(data, sc);
     }
 
-
     //Server Read
     private void OnIncomingData(ServerClient c, string data)
     {
@@ -175,13 +174,11 @@ public class Server : MonoBehaviour
             case "CWHO":
                 c.clientName = "host";
                 c.isHost = (aData[2] == "0") ? false : true;
-                //c.clientName
                 Broadcast("SCNN|" + clientName, clients);
                 break;
             case "CMOV":
                 Broadcast("SMOV|" + aData[1] + "|" + aData[2] + "|" + aData[3] + "|" + aData[4] + "|" + aData[5] + "|" + aData[6] + "|", clients);
                 break;
-
         }
     }
 }

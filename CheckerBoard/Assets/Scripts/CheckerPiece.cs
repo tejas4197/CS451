@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CheckerPiece : MonoBehaviour {
 
-    public int[] position = new int[2];  // position x, y    
     public bool isBlack;
     private bool isKinged;
+    public int[] position = new int[2];  // position x, y        
     private PieceMovement movement;      // will handle all piece movement
 
     //Basically this works as the constructor
@@ -16,19 +16,13 @@ public class CheckerPiece : MonoBehaviour {
         movement = gameObject.GetComponent<PieceMovement>();
     }
 
-    //constructor not being used
-    public CheckerPiece(int[] pos, bool black)
-	{
-        //position[0] = pos[0];
-        //position[1] = pos[1];
-        //this.isBlack = black;
-        //movement = new PieceMovement();	
-    }
+    public CheckerPiece() { }
 	
     #region "Get Methods"
 	
 	public int[] getPosition() { return position; }
 	
+    //return true if piece is black, false otherwise
 	public bool getColor() { return isBlack; }
 	
 	public bool getIsKing() { return isKinged; }
@@ -58,7 +52,6 @@ public class CheckerPiece : MonoBehaviour {
     public void promote()
 	{
 		isKinged = true;
-		//code to switch regular piece with king piece visually?
 	}
     
     #endregion
