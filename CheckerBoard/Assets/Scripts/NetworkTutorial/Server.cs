@@ -173,8 +173,6 @@ public class Server : MonoBehaviour
         string[] aData = data.Split('|');
         string clientName = "client";
 
-        Debug.Log(aData[2]);
-
         switch (aData[0])
         {
             case "CWHO":
@@ -184,7 +182,7 @@ public class Server : MonoBehaviour
                 Broadcast("SCNN|" + clientName, clients);
                 break;
             case "CMOV":
-                Broadcast("SMOV|" + aData[1] + "|" + aData[2] + "|" + aData[3] + "|" + aData[4] + "|", clients);
+                Broadcast("SMOV|" + aData[1] + "|" + aData[2] + "|" + aData[3] + "|" + aData[4] + "|" + aData[5] + "|", clients);
                 break;
 
         }

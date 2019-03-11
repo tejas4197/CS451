@@ -94,7 +94,7 @@ public class Client : MonoBehaviour
                 break;
             case "SMOV":
                 Debug.Log(aData[1] + "" + aData[3]);
-                GameManager.Instance.gameMove(int.Parse(aData[1]), int.Parse(aData[2]), int.Parse(aData[3]), int.Parse(aData[4]));
+                GameManager.Instance.gameMove(int.Parse(aData[1]), int.Parse(aData[2]), int.Parse(aData[3]), int.Parse(aData[4]), aData[5]);
                 break;
         }
     }

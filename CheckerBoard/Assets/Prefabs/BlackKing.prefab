@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2735611810624648270}
   - component: {fileID: 5893983938591314103}
-  - component: {fileID: 642129663335706646}
-  - component: {fileID: 352067238179892928}
-  - component: {fileID: 5279435041341621719}
+  - component: {fileID: 2939508873356934084}
+  - component: {fileID: 6082647238221939187}
+  - component: {fileID: 5688193064628696988}
   m_Layer: 0
-  m_Name: RedPiece
-  m_TagString: Red Piece
+  m_Name: BlackKing
+  m_TagString: Black Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 867d7c0fa0d6f2d4fb85e64665f6e1cb, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.5283019, g: 0.5208259, b: 0.5208259, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &642129663335706646
+--- !u!114 &2939508873356934084
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: 0000000000000000
-  isBlack: 0
---- !u!65 &352067238179892928
+  isBlack: 1
+--- !u!65 &6082647238221939187
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,7 +109,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5279435041341621719
+--- !u!114 &5688193064628696988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

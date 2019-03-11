@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public int[] currentPiece = new int[2];
     public Server player;
     public Client c;
+
+    public bool mustJump; 
     //public ServerPlayer player; //wait what is this object?
 
     #region "Code that Runs Game"
@@ -54,7 +56,7 @@ public class GameManager : MonoBehaviour
         isBlacksTurn = true;        
         playerBlack = c.isHost;
         changeTurn = true;
-
+        mustJump = false;
 
         // if winstate returns true (meaning a player won, then break the loop)
         /*
@@ -75,12 +77,13 @@ public class GameManager : MonoBehaviour
     {        
         //if screen is clicked on
         if (Input.GetMouseButtonDown(0))
-        {             
-            if (isBlacksTurn)
+        {
+            Debug.Log("BlackTurn is " + isBlacksTurn + " and playerBLack is " + playerBlack);
+            if (isBlacksTurn && playerBlack)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 rayAction("Black Piece", ray);
-            } else
+            } else if (!isBlacksTurn && !playerBlack)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 rayAction("Red Piece", ray);
@@ -119,29 +122,47 @@ public class GameManager : MonoBehaviour
                 //if a yellow tile was clicked on
                 if (board.squares[hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0], hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1]].GetComponent<SpriteRenderer>().color == Color.yellow)
                 {
-                    gameMove(hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0], hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1], currentPiece[0], currentPiece[1]);
-                    c.Send("CMOV|" + hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0] + "|" + hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1] + "|" + currentPiece[0] + "|" + currentPiece[1]);
-                    //also send game move to client             
+                    string toChange = "no";
+                    if (changeTurn && !mustJump)
+                    {
+                        changeTurns();
+                        toChange = "yes";
+                        board.setOriginalColors();
+                    }
+
+                    gameMove(hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0], hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1], currentPiece[0], currentPiece[1], toChange);
+                    c.Send("CMOV|" + hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[0] + "|" + hit.transform.gameObject.GetComponent<BoardCell>().getPosition()[1] + "|" + currentPiece[0] + "|" + currentPiece[1] + "|" + toChange);
+                   
                 }
                 //remove previous yellow tiles (if were changing turns)
-                if (changeTurn) { board.setOriginalColors(); }          
+                      
             }
 
-            Debug.Log(hit.transform.gameObject.tag);
+           // Debug.Log(hit.transform.gameObject.tag);
         }
     }
   
-    public void gameMove(int squareX, int squareY, int pieceX, int pieceY)
+    public void gameMove(int squareX, int squareY, int pieceX, int pieceY, string toChange)
     {
+       
+        if (toChange == "yes")
+        {
+            changeTurns();
+            mustJump = false;
+        }
+
         //get board cell we're touching
         GameObject square = board.getBoardCell(squareX, squareY);
-
-        //Firstly, we're able to take turns after each move
-        changeTurn = true;
+        GameObject piece = board.getPieceOnBoard(pieceX, pieceY);
+        
+        if(piece != null && square != null)
+        {
+            piece.GetComponent<PieceMovement>().move(board.getPieceOnBoard(pieceX, pieceY), square.GetComponent<BoardCell>());
+            board.setPieceOnBoard(board.getPieceOnBoard(pieceX, pieceY), square.GetComponent<BoardCell>().getPosition()[0], square.GetComponent<BoardCell>().getPosition()[1]);
+            changeTurn = true;
+        }      
 
         //get piece currently clicked on and set it on the new space
-        board.getPieceOnBoard(pieceX, pieceY).GetComponent<PieceMovement>().move(board.getPieceOnBoard(pieceX, pieceY), square.GetComponent<BoardCell>());
-        board.setPieceOnBoard(board.getPieceOnBoard(pieceX, pieceY), square.GetComponent<BoardCell>().getPosition()[0], square.GetComponent<BoardCell>().getPosition()[1]);
         board.clearPieceOnBoard(pieceX, pieceY); //empty old space
 
         //if the difference in y between the old and new space is two spaces, that means a jump was made
@@ -170,18 +191,30 @@ public class GameManager : MonoBehaviour
                     pieceX = square.GetComponent<BoardCell>().getPosition()[0];
                     pieceY = square.GetComponent<BoardCell>().getPosition()[1];
                     changeTurn = false;
+                    mustJump = true;
                 }
             }
         }
 
         //check if someone has won after every move
         checkWinState(isBlacksTurn, board);
+    }
 
-        if (changeTurn) //if were changing turns
+    public void changeTurns()
+    {
+        Debug.Log("Inside changeTurns func");
+        if (isBlacksTurn)
         {
-            if (isBlacksTurn) { isBlacksTurn = false; }
-            else { isBlacksTurn = true; }
+            Debug.Log("Blacks Turn become false");
+            isBlacksTurn = false;
+
         }
+        else
+        {
+            Debug.Log("Blacks Turn become true");
+            isBlacksTurn = true;
+        }
+  //      c.Send("CHMOV|" + isBlacksTurn);
     }
 
     public void takeTurn(bool isBlacksTurn)
