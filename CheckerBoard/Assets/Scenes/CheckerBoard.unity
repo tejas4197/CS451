@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -146,11 +146,9 @@ MonoBehaviour:
   turnText: {fileID: 1171388680}
   winLoseText: {fileID: 1354713180}
   c: {fileID: 8925912790422832166, guid: f3d10287574fb7a44b8fd44b0c3652e2, type: 3}
-  isConnected: 0
   isBlacksTurn: 0
   playerBlack: 0
   changeTurn: 0
-  clientThing: 0
   currentPiece: 0000000000000000
   oldPiece: 0000000000000000
   forceCapture: 0
@@ -442,7 +440,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -420, y: -186}
+  m_AnchoredPosition: {x: -517, y: -186}
   m_SizeDelta: {x: 193.17, y: 34.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1171388680
