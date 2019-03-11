@@ -79,7 +79,6 @@ public class Client : MonoBehaviour
     //read messages from the server
     private void OnIncomingData(string data)
     {
-        Debug.Log("Client: " + data);
         string[] aData = data.Split('|');
         string clientName = "host";
 
@@ -93,8 +92,12 @@ public class Client : MonoBehaviour
                 UserConnected(aData[1]);
                 break;
             case "SMOV":
-                Debug.Log(aData[1] + "" + aData[3]);
-                GameManager.Instance.gameMove(int.Parse(aData[1]), int.Parse(aData[2]), int.Parse(aData[3]), int.Parse(aData[4]), aData[5]);
+                GameManager.Instance.gameMove(int.Parse(aData[1]), int.Parse(aData[2]), int.Parse(aData[3]), int.Parse(aData[4]));
+                GameManager.Instance.Turn(int.Parse(aData[5]));
+                break;
+            case "STURN":
+                Debug.Log(aData);
+                GameManager.Instance.Turn(int.Parse(aData[1]));
                 break;
         }
     }

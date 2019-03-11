@@ -128,20 +128,18 @@ public class PieceMovement : MonoBehaviour {
         // is this the other side of the board? King the piece then
         if ((bc.getPosition()[1] == 0) || (bc.getPosition()[1] == 7))
         {
-            
             if (!piece.GetComponent<CheckerPiece>().getIsKing()) //if its not already king
             {
                 piece.GetComponent<CheckerPiece>().promote();
-                //piece.GetComponent<CheckerPiece>().promote() = kingPiece;
                 if (piece.GetComponent<CheckerPiece>().getColor())
+                {
                     piece.GetComponent<SpriteRenderer>().color = Color.gray;
+                }
                 else
                 {
                     piece.GetComponent<SpriteRenderer>().color = Color.magenta;
-
                 }
-            }
-                   
+            }          
         }
 
         //move piece physically

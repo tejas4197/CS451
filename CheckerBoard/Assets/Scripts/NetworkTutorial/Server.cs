@@ -67,8 +67,6 @@ public class Server : MonoBehaviour
                     StreamReader reader = new StreamReader(s, true);
                     string data = reader.ReadLine();
 
-                    Debug.Log(data);
-
                     //If there is data, parse it
                     if (data != null)
                         OnIncomingData(c, data);
@@ -169,7 +167,6 @@ public class Server : MonoBehaviour
     //Server Read
     private void OnIncomingData(ServerClient c, string data)
     {
-        Debug.Log("Host: " + data);
         string[] aData = data.Split('|');
         string clientName = "client";
 
@@ -184,7 +181,9 @@ public class Server : MonoBehaviour
             case "CMOV":
                 Broadcast("SMOV|" + aData[1] + "|" + aData[2] + "|" + aData[3] + "|" + aData[4] + "|" + aData[5] + "|", clients);
                 break;
-
+            case "CTURN":
+                Broadcast("STURN|" + aData[1] + "|", clients);
+                break;
         }
     }
 }

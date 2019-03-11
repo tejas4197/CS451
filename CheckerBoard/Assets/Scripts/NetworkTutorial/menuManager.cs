@@ -39,8 +39,6 @@ public class menuManager : MonoBehaviour
             Client c = Instantiate(clientPrefab).GetComponent<Client>();
             c.isHost = true;
             c.ConnectToServer("127.0.0.1", 7070);
-
-            //if(c.clientName = )
         }
         catch(Exception e){
             Debug.Log(e.Message);
