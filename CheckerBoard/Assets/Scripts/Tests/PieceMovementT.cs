@@ -92,6 +92,11 @@ namespace Tests
         //That way I can check that if there are available jumps
         public int checkSpace(GameObject mySpace, GameObject nextSpace, GameObject jumpSpace)
         {
+           if (mySpace == null || nextSpace == null || jumpSpace == null)
+            {
+                return 0;
+            }
+
             //check that space exists
             if (nextSpace != null)
             {
@@ -161,7 +166,42 @@ namespace Tests
         [Test]
         public void PieceMovementTSimplePasses()
         {
-            // Use the Assert class to test conditions
+            // Test Game Board
+            GameBoardTs gb = new GameObject().AddComponent<GameBoardTs>();
+            gb.CreateBoard();
+            gb.placeInitialPieces();
+            
+            // Test Checker Piece
+            CheckerPieceTs cp = new GameObject().AddComponent<CheckerPieceTs>();
+            cp.setPosition(2, 2);
+
+            // Test Board Cell
+            BoardCellTs b1 = new GameObject().AddComponent<BoardCellTs>();
+            BoardCellTs b2 = new GameObject().AddComponent<BoardCellTs>(); 
+            BoardCellTs myCell = new GameObject().AddComponent<BoardCellTs>();
+            int[] p1 = new int[] { 1, 3 };
+            int[] p2 = new int[] { 3, 3 };
+            int[] p3 = new int[] { 2, 2 };
+            b1.GetComponent<BoardCellTs>().BoardCellConstruct(p1, false, cp);
+            b2.GetComponent<BoardCellTs>().BoardCellConstruct(p2, false, cp);
+            myCell.GetComponent<BoardCellTs>().BoardCellConstruct(p3, false, cp);
+
+            // Test Piece Movement
+            PieceMovementTs pm = new GameObject().AddComponent<PieceMovementTs>();
+
+            Debug.Log("Testing for valid moves for piece at (2,2)");
+            List<GameObject> validMoves = pm.getValidKingMoves(cp.getPosition(), gb);
+            Assert.IsTrue(validMoves.Count == 0);
+
+            Debug.Log("Testing for valid king moves for piece at (2,2)");
+            List<GameObject> validKingMoves = pm.getValidKingMoves(cp.getPosition(), gb);
+            Assert.IsTrue(validKingMoves.Count == 0);
+
+            Debug.Log("Testing move piece at board cell (1, 3)");
+            pm.move(cp.gameObject, b1);
+            Assert.IsTrue(cp.getPosition()[0] == 1);
+            Assert.IsTrue(cp.getPosition()[1] == 3);
+
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
