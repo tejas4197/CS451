@@ -22,7 +22,7 @@ namespace Tests
             position[0] = pos[0];
             position[1] = pos[1];
             isOccupied = Occupied;
-            CheckerPieceTs piece = cp;
+            piece = cp;
         }
         
         #region "Get Methods"
@@ -57,24 +57,25 @@ namespace Tests
     {
         // A Test behaves as an ordinary method
         [Test]
-        public void BoardCellTSimplePasses()
+        public void BoardCellFunctionality()
         {
             // Use the Assert class to test conditions
             BoardCellTs Bc = new GameObject().AddComponent<BoardCellTs>();
+            CheckerPieceTs Cp = new GameObject().AddComponent<CheckerPieceTs>();
+            int[] p = { 1, 2};
+
+            Bc.BoardCellConstruct(p, true, Cp);
+
+            Assert.IsTrue(Bc.checkIfOccupied());
+            Assert.AreEqual(p, Bc.getPosition());
+            Assert.IsNotNull(Bc.getPiece());
+
             Bc.clearSpace();
             Assert.IsFalse(Bc.checkIfOccupied());
-            //Assert.IsTrue(Bc.checkIfOccupied());
-            //Assert.AreEqual(Bc.checkIfOccupied());
-        }
 
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
-        [UnityTest]
-        public IEnumerator BoardCellTWithEnumeratorPasses()
-        {
-            // Use the Assert class to test conditions.
-            // Use yield to skip a frame.
-            yield return null;
+            Bc.setPiece(Cp);
+            Assert.IsTrue(Bc.checkIfOccupied());
+            Assert.IsNotNull(Bc.getPiece());
         }
     }
 }

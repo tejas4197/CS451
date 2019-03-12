@@ -452,16 +452,9 @@ namespace Tests
         public void NewTestScriptSimplePasses()
         {
             GameManagerTs Gm = new GameManagerTs();
-            //GameBoardTs Bd = new GameBoardTs(); 
-        }
 
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
-        [UnityTest]
-        public IEnumerator NewTestScriptWithEnumeratorPasses()
-        {
-
-            yield return null;
+            Assert.IsTrue(Gm.isBlacksTurn);
+            Assert.IsTrue(Gm.changeTurn);
         }
     }
 }
